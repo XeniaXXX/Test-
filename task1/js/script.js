@@ -1,25 +1,23 @@
-let yellowBtn = document.querySelector('.btn-warning'),
-    header = document.querySelector('.header'),
-    greenBtn = document.querySelector('.btn-success'),
+const yellowBtn = document.querySelector('.btn-warning'),
+    greenBtn = document.querySelector('.btn-success');
+
+let header = document.querySelector('.header'),
     blueBlock = document.querySelector('#left'),
     yellowBlock = document.querySelector('#right'),
-    wrapperBlock = document.querySelector('.wrapper'),
     modal = document.querySelector('.modal'),
-    modalClose = document.querySelector('.modal__close');
-
+    modalClose = document.querySelector('.modal__close'),
+    leftCol = document.querySelector('.left'),
+    rightCol = document.querySelector('.right'),
+    newBlueBlock = document.querySelector('#left').cloneNode(),
+    newYellowBlock = document.querySelector('#right').cloneNode();
 
 // №2.1
 yellowBtn.addEventListener('click', function() {
-    if (header.classList.contains('show')) {
-        header.classList.remove('show');
-        header.classList.add('hide');
-    } else {
-        header.classList.remove('hide');
-        header.classList.add('show');
-    }
+    header.classList.toggle('hide');
 });
 
 // №2.2
+// 1
 greenBtn.addEventListener('click', function() {
     if (blueBlock.classList.contains('blue') && yellowBlock.classList.contains('yellow')) {
         blueBlock.classList.remove('blue');
@@ -34,21 +32,63 @@ greenBtn.addEventListener('click', function() {
     }
 });
 
+// 2
+greenBtn.addEventListener('click', function() {
+    if(leftCol.firstElementChild.classList == 'colored blue') {
+        leftCol.insertAdjacentElement('afterbegin', yellowBlock);
+        rightCol.insertAdjacentElement('afterbegin', blueBlock);
+    } else {
+        leftCol.insertAdjacentElement('afterbegin', blueBlock);
+        rightCol.insertAdjacentElement('afterbegin', yellowBlock);
+    }
+});
+
+// 3
+greenBtn.addEventListener('click', function() {
+    if(leftCol.firstElementChild.classList == 'colored blue') {
+        blueBlock.replaceWith(newYellowBlock);
+        yellowBlock.replaceWith(newBlueBlock);
+    } 
+    else {
+        newBlueBlock.replaceWith(yellowBlock);
+        newYellowBlock.replaceWith(blueBlock);
+    }
+});
+
+// 4
+$(function(){
+    jQuery.fn.swap = function(b) {
+      b = jQuery(b)[0];
+      let a = this[0],
+          a2 = a.cloneNode(true),
+          b2 = b.cloneNode(true),
+          stack = this;
+  
+      a.parentNode.replaceChild(b2, a);
+      b.parentNode.replaceChild(a2, b);
+  
+      stack[0] = a2;
+      return this.pushStack( stack );
+  };
+
+  $('.btn-success').on('click', function(){
+    $('#right').swap('#left');
+  });
+});
+
 // №2.3
-function showPopup() {
+window.onload = function() {
     setTimeout(function() {
         modal.classList.add('open');
     }, 1000);
-}
-window.onload = showPopup();
+};
 
-function closeModal() {
+modalClose.addEventListener('click', function() {
     modal.classList.remove('open');
-}
-modalClose.addEventListener('click', closeModal);
+});
 
 modal.addEventListener('click', function(e) {
     if (e.target == modal || e.target.getAttribute('data-close') == '') {
-        closeModal();
+        modal.classList.remove('open');
     }
 });

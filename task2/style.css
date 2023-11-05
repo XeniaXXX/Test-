@@ -4,22 +4,6 @@
     box-sizing: border-box;
 }
 
-.wrapper {
-    display: flex;
-    margin: 20px;
-}
-
-#select {
-    width: 100px;
-    padding: 10px 5px;
-}
-
-input {
-    width: 150px;
-    padding: 10px 5px;
-}
-
-.btn {
-    width: 150px;
-    height: 39px
+h1 {
+    margin: 10px;
 }

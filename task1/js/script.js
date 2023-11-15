@@ -1,41 +1,66 @@
 const yellowBtn = document.querySelector('.btn-warning'),
-    greenBtn = document.querySelector('.btn-success');
-
-let header = document.querySelector('.header'),
-    blueBlock = document.querySelector('#left'),
-    yellowBlock = document.querySelector('#right'),
+    greenBtn = document.querySelector('.btn-success'),
+    header = document.querySelector('.header'),
+    blueBlock = document.querySelector('.blue'),
+    yellowBlock = document.querySelector('.yellow'),
     modal = document.querySelector('.modal'),
     modalClose = document.querySelector('.modal__close');
 
 // №2.1
-yellowBtn.addEventListener('click', function() {
+function toggleElem() {
     header.classList.toggle('hide');
-});
+}
+yellowBtn.addEventListener('click', toggleElem);
+
+// function toggleElem(elem, selector) {
+//     elem.classList.toggle(selector);
+// }
+// yellowBtn.addEventListener('click', function() {
+//     toggleElem(header, 'hide');
+// });
 
 // №2.2
-greenBtn.addEventListener('click', function() {
-    if (getComputedStyle(blueBlock).order == 1) {
-        blueBlock.style.order = 2;
-        yellowBlock.style.order = 1;
-    } else {
-        blueBlock.style.order = 1;
-        yellowBlock.style.order = 2;
-    }
-});
+function reorderElems() {
+    blueBlock.classList.toggle('first__block');
+}
+greenBtn.addEventListener('click', reorderElems);
+
+// greenBtn.addEventListener('click', function() {
+//     toggleElem(blueBlock, 'first__block');
+// });
+
 
 // №2.3
+function openModal() {
+    modal.classList.toggle('open');
+}
+
 window.onload = function() {
     setTimeout(function() {
-        modal.classList.add('open');
+        toggleElem(modal, 'open');
     }, 1000);
 };
 
 modalClose.addEventListener('click', function() {
-    modal.classList.remove('open');
+    toggleElem(modal, 'open');
 });
 
 modal.addEventListener('click', function(e) {
-    if (e.target == modal || e.target.getAttribute('data-close') == '') {
-        modal.classList.remove('open');
+    if (e.target == modal) {
+        toggleElem(modal, 'open');
     }
 });
+
+// window.onload = function() {
+//     setTimeout(function() {
+//         openModal();
+//     }, 1000);
+// };
+
+// modalClose.addEventListener('click', openModal);
+
+// modal.addEventListener('click', function(e) {
+//     if (e.target == modal) {
+//         openModal();
+//     }
+// });

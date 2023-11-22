@@ -1,6 +1,6 @@
 // №2.5
 // №2.6
-let form = document.querySelector('form'),
+const form = document.querySelector('form'),
     dataDiv = document.querySelector('.form_data');
 
 //XMLHttpRequest
@@ -11,7 +11,7 @@ form.addEventListener('submit', function(event) {
     json = JSON.stringify(values);
     dataDiv.textContent = json;
     let xhr = new XMLHttpRequest();
-    xhr.open("GET", `server.php?${json}`, true);
+    xhr.open("GET", `server.php?${new URLSearchParams(formData)}`, true);
     xhr.onload = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
             alert(xhr.responseText);
@@ -23,6 +23,19 @@ form.addEventListener('submit', function(event) {
     xhr.send();
 });
 
+//fecth 
+// form.addEventListener('submit', function(event) {
+//     event.preventDefault();
+//     let formData = new FormData(form),
+//     values = Object.fromEntries(formData.entries()),
+//     json = JSON.stringify(values);
+//     dataDiv.textContent = json;
+//     fetch(`server.php?${new URLSearchParams(formData)}`)
+//     .then(data => data.text())
+//     .then(data => {
+//         alert(data);
+//     });
+// });
 
 // ajax
 // form.addEventListener('submit', function(event) {
@@ -32,26 +45,10 @@ form.addEventListener('submit', function(event) {
 //     json = JSON.stringify(values);
 //     dataDiv.textContent = json;
 //     $.ajax({
-//         url: 'server.php', 
+//         url: `server.php?${new URLSearchParams(formData)}`, 
 //         method: 'GET', 
-//         data: json,
 //         success: function(data) {
 //             alert(data);
 //         }
 //     });
 // });
-
-//fecth 
-// form.addEventListener('submit', function(event) {
-//     event.preventDefault();
-//     let formData = new FormData(form),
-//     values = Object.fromEntries(formData.entries()),
-//     json = JSON.stringify(values);
-//     dataDiv.textContent = json;
-//     fetch(`server.php?${json}`)
-//     .then(data => data.text())
-//     .then(data => {
-//         alert(data);
-//     });
-// });
-
